@@ -1,24 +1,32 @@
 class Planet
   constructor: (name, x, y, radius) ->
-    @container = $('<div/>')
-    left = x
-    top = y
-    @x = x + (radius / 2)
-    @y = y + (radius / 2)
+    @x = x
+    @y = y
+    @radius = radius
+    @name = name
+    @showPlanet()
 
-    @menu =$('#prototype .planet-menu').clone()
+    @buildMenu()
+
+  showPlanet: ->
+    @container = $('<div/>')
+    @left = @x
+    @top = @y
+    @x = @left + (@radius / 2)
+    @y = @top + (@radius / 2)
+
 
     @container.css
       position: 'absolute'
-      left: left
-      top: top
-      width: radius
-      height: radius
-      backgroundImage: "url(/images/planets/#{name}.png)"
+      left: @left
+      top: @top
+      width: @radius
+      height: @radius
+      backgroundImage: "url(/images/planets/#{@name}.png)"
       backgroundSize: "cover"
       cursor: 'pointer'
 
-    @a = $("<a>#{name}</a>")
+    @a = $("<a>#{@name}</a>")
     @a.attr('href', '#')
     $('#map').append(@a)
 
@@ -26,6 +34,11 @@ class Planet
 
     $('#space').append(@container)
     @container.click(@showMenu)
+
+  buildMenu: ->
+    @menu =$('#prototype .planet-menu').clone()
+    @template = @menu.html()
+    $('body').append(@menu)
 
   scrollTo: (e) =>
     e.preventDefault()
@@ -37,8 +50,15 @@ class Planet
       easing: "easeInOutQuad"
 
   showMenu: (e) =>
-    $('body').append(@menu)
-    @menu.fadeToggle()
+    output = Mustache.render(@template, this)
+    @menu.html(output)
+
+    @menu.find(".close").click(@hideMenu)
+
+    @menu.fadeIn()
+
+  hideMenu: (e) =>
+    @menu.fadeOut()
       
     
 class Ship

@@ -1,9 +1,19 @@
 @charset "utf-8";
 
+/* http://colorschemedesigner.com/#3D61Uk.ppuDoH */
+$primary: #6F8DB4;
+
+/* secondary b */
+$menu-bg: #105844;
+
+/* compliment  */
+$menu-border: #2F856D;
+
+
 body {
   background: url("../images/bg.png");
   font-family: sans-serif;
-  color: #96A1CA;
+  color: #6C8CD5;
 }
 
 #map {
@@ -30,10 +40,18 @@ body {
   position: fixed;
   top: 10%;
   left: 30%;
-  background-color: #164B58;
-  border: 2px solid #427A87;
+  background-color: $menu-bg;
+  border: 2px solid $menu-border;
   border-radius: 5px;
   padding: 10px;
   z-index: 1000;
   opacity: 0.7;
+}
+
+.menu .close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: $primary;
 }
