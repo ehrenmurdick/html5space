@@ -10,10 +10,30 @@ class window.Menu
 
   showMenu: (e) =>
     output = Mustache.render(@template, @object)
-    ship = this
-    object = @object
     @menu.html(output)
+    @bindChildren()
+    @bindActions()
 
+    @menu.find(".close").click(-> window.game.popMenu())
+    @menu.fadeIn()
+
+
+  hideMenu: (e) =>
+    @menu.fadeOut()
+
+  bindActions: ->
+    object = @object
+    @menu.find(".action").each ->
+      $(this).click (e) ->
+        e.preventDefault()
+        $this = $(this)
+        action = $this.data("action")
+        argument = $this.data("argument")
+        object[action](argument)
+
+
+  bindChildren: ->
+    object = @object
     @menu.find(".next").each ->
       $(this).click (e) ->
         e.preventDefault()
@@ -23,18 +43,3 @@ class window.Menu
         obj = object[$this.data("collection")][id]
         menu = new Menu(obj, next)
         window.game.pushMenu(menu)
-
-    @menu.find(".action").each ->
-      $(this).click (e) ->
-        e.preventDefault()
-        $this = $(this)
-        action = $this.data("action")
-        argument = $this.data("argument")
-        object[action](argument)
-
-    @menu.find(".close").click(-> window.game.popMenu())
-    @menu.fadeIn()
-
-
-  hideMenu: (e) =>
-    @menu.fadeOut()
