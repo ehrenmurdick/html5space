@@ -4,8 +4,21 @@
     #map
     #space
 
-  #prototype
-    .menu.planet-menu{style: 'display:none'}
-      .close X
-      .content
-        {{name}}
+    #prototype
+      .menu.planet-menu{style: 'display:none'}
+        .close X
+        %h3 {{name}}
+        .hangar
+          {{#hangar}}
+          .ship{"data-id" => "{{id}}"}
+            .icon &nbsp;
+            .name {{name}}
+          {{/hangar}}
+      .menu.ship-menu{style: 'display:none'}
+        .close X
+        %h3 {{name}}
+        %ul.destinations
+          {{#destinations}}
+          %li 
+            %a{href: "#", "data-id" => "{{id}}"} {{name}}
+          {{/destinations}}

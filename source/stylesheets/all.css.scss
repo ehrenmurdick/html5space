@@ -1,10 +1,14 @@
 @charset "utf-8";
 
-/* http://colorschemedesigner.com/#3D61Uk.ppuDoH */
+/* 
+http://colorschemedesigner.com/#3D61Uk.ppuDoH 
+*/
 $primary: #6F8DB4;
+$primary-dark: #133158;
 
 /* secondary b */
 $menu-bg: #105844;
+$menu-bg2: #2F856D;
 
 /* compliment  */
 $menu-border: #2F856D;
@@ -36,7 +40,6 @@ body {
 
 .menu {
   width: 500px;
-  height: 200px;
   position: fixed;
   top: 10%;
   left: 30%;
@@ -48,10 +51,29 @@ body {
   opacity: 0.7;
 }
 
+.menu h3 {
+  margin-top: 0;
+}
+
 .menu .close {
   position: absolute;
   top: 5px;
   right: 5px;
   cursor: pointer;
   color: $primary;
+}
+
+.hangar .ship .icon {
+  background-image: url(/images/ship.png);
+  width: 32px;
+  height: 48px;
+  margin: auto;
+}
+
+.hangar .ship {
+  background-color: $menu-bg2;
+  color: $primary-dark;
+  padding: 4px;
+  margin: 8px;
+  cursor: pointer;
 }
