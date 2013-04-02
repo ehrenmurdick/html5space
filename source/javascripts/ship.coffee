@@ -1,20 +1,37 @@
 class window.Ship
+  @distance: (start, finish) ->
+    dx = finish.x - start.x
+    dy = finish.y - start.y
+    Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+
+  @timeForDistance: (distance, acceleration) ->
+    (Math.sqrt(2 * distance) / acceleration) * 2
+
+  @flightDuration: (start, finish, acceleration) ->
+    @timeForDistance(@distance(start, finish), acceleration)
+
+  @angle: (a, b) ->
+    dx = b.x - a.x
+    dy = b.y - a.y
+    angle = Math.atan(dy/dx)
+    angle += Math.PI/2
+    angle += Math.PI if dx < 0
+    angle
+
+
   constructor: (name) ->
     @id = window.game.guid()
     @name = name
+    @acceleration = 0.025
 
   patrol: (finish) ->
     finish = window.game.planets[finish]
     start = @planet
-    dx = finish.x - start.x
-    dy = finish.y - start.y
-    angle = Math.atan(dy/dx)
-    angle += Math.PI/2
-    angle += Math.PI if dx < 0
+    angle = Ship.angle(start, finish)
 
     @planet.removeShip(this)
 
-    dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+    time = Ship.flightDuration(start, finish, @acceleration)
 
     @el = $('<div/>')
     @el.css
@@ -30,25 +47,27 @@ class window.Ship
     $('#space').append(@el)
 
     patrol = (start, finish) =>
-      fx = finish.x + (Math.random()*500-250)
-      fy = finish.y + (Math.random()*500-250)
+      f =
+        x: finish.x + (Math.random()*500-250)
+        y: finish.y + (Math.random()*500-250)
 
-      dx = fx - parseInt(@el.css("left"))
-      dy = fy - parseInt(@el.css("top"))
+      s =
+        x: parseInt(@el.css("left"))
+        y: parseInt(@el.css("top"))
 
-      angle = Math.atan(dy/dx)
-      angle += Math.PI/2
-      angle += Math.PI if dx < 0
+      time = Ship.flightDuration(s, f, @acceleration)
+
+      angle = Ship.angle(s, f)
       
       @el.animate
         rotate: angle
       ,
         complete: =>
           @el.animate
-            left: fx
-            top: fy
+            left: f.x
+            top: f.y
           ,
-            duration: dist
+            duration: time
             easing: "easeInOutQuad"
             complete: =>
               patrol(finish, start)
@@ -58,15 +77,12 @@ class window.Ship
   transfer: (finish) ->
     finish = window.game.planets[finish]
     start = @planet
-    dx = finish.x - start.x
-    dy = finish.y - start.y
-    angle = Math.atan(dy/dx)
-    angle += Math.PI/2
-    angle += Math.PI if dx < 0
+    
+    angle = Ship.angle(start, finish)
 
     @planet.removeShip(this)
 
-    dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+    time = Ship.timeForDistance(start, finish, @acceleration)
 
     @el = $('<div/>')
     @el.css
@@ -85,7 +101,7 @@ class window.Ship
       left: finish.x
       top: finish.y
     ,
-      duration: dist
+      duration: time
       easing: "easeInOutQuad"
       complete: =>
         finish.addShip(this)
