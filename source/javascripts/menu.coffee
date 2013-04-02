@@ -27,6 +27,7 @@ class window.Menu
         action = $this.data("action")
         argument = $this.data("argument")
         object[action](argument)
+        window.game.popMenu()
 
 
   bindChildren: ->

@@ -4,5 +4,6 @@
   %ul.destinations
     {{#destinations}}
     %li 
-      %a.action{href: "#", "data-action" => "transfer", "data-argument" => "{{id}}"} {{name}}
+      %a.action{href: "#", "data-action" => "transfer", "data-argument" => "{{id}}"} Transfer to {{name}}
+      %a.action{href: "#", "data-action" => "patrol", "data-argument" => "{{id}}"} Patrol to {{name}}
     {{/destinations}}
