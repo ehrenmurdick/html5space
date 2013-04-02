@@ -1,26 +1,11 @@
 !!!
 %html
+  %head
+    %title Awesome Spacegame
+
+    = stylesheet_link_tag "normalize", "all"
+    = javascript_include_tag  "all"
+
   %body
     #map
     #space
-
-    #prototype
-      .menu.planet-menu{style: 'display:none'}
-        .close X
-        %h3 {{name}}
-        .hangar
-          {{#hangar}}
-          .ship.next{"data-id" => "{{id}}", "data-collection" => "ships", "data-next" => "ship-menu"}
-            .icon &nbsp;
-            .name {{name}}
-          {{/hangar}}
-
-
-      .menu.ship-menu{style: 'display:none'}
-        .close X
-        %h3 {{name}}
-        %ul.destinations
-          {{#destinations}}
-          %li 
-            %a.action{href: "#", "data-action" => "traverse", "data-argument" => "{{id}}"} {{name}}
-          {{/destinations}}

@@ -1,21 +1,18 @@
 class window.Menu
   constructor: (obj, name) ->
     @object = obj
-    @id = window.game.guid()
-    @menu =$("#prototype .#{name}").clone()
-    @template = @menu.html()
-    $('body').append(@menu)
     @name = name
 
 
   showMenu: (e) =>
-    output = Mustache.render(@template, @object)
-    @menu.html(output)
-    @bindChildren()
-    @bindActions()
+    $.get "/menus/#{@name}.html", (data) =>
+      @menu = $(Mustache.render(data, @object))
+      $('body').append(@menu)
+      @bindChildren()
+      @bindActions()
 
-    @menu.find(".close").click(-> window.game.popMenu())
-    @menu.fadeIn()
+      @menu.find(".close").click(-> window.game.popMenu())
+      @menu.fadeIn()
 
 
   hideMenu: (e) =>

@@ -49,7 +49,7 @@ class window.Planet
       window.game.pushMenu(menu)
 
   scrollTo: (e) =>
-    window.game.clearMenu()
+    window.game.popMenu()
     e.preventDefault()
     $('body').stop().animate
       scrollLeft: @x - ($(window).width()/2)
@@ -57,4 +57,7 @@ class window.Planet
     ,
       duration: 2e3
       easing: "easeInOutQuad"
+
+  hideMenu: (e) =>
+    @menu.fadeOut()
       

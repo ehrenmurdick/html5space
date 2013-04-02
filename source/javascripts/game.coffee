@@ -14,6 +14,7 @@ class Game
       new Planet("planet4", 3000, 16000, 400)
     ]
     planets[2].addShip(new Ship("Hood"))
+    planets[2].addShip(new Ship("Reliant"))
 
     for p in planets
       @addPlanet(p)

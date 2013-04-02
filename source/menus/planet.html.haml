@@ -1,0 +1,9 @@
+.menu.planet-menu
+  .close X
+  %h3 {{name}}
+  .hangar
+    {{#hangar}}
+    .ship.next{"data-id" => "{{id}}", "data-collection" => "ships", "data-next" => "ship-menu"}
+      .icon &nbsp;
+      .name {{name}}
+    {{/hangar}}

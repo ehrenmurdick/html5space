@@ -1,0 +1,8 @@
+.menu.ship-menu{style: 'display:none'}
+  .close X
+  %h3 {{name}}
+  %ul.destinations
+    {{#destinations}}
+    %li 
+      %a.action{href: "#", "data-action" => "traverse", "data-argument" => "{{id}}"} {{name}}
+    {{/destinations}}
