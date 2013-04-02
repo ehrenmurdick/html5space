@@ -7,14 +7,11 @@ class Game
     @menus = []
     @planets = {}
     planets = [
-      new Planet("planet2", 800, 100, 500),
-      new Planet("planet1", 15000, 7000, 200),
+      new Planet("planet2", 5000, 14500, 500),
       new Planet("planet3", 7000, 15000, 400),
-      new Planet("planet4", 15000, 16000, 400),
-      new Planet("planet4", 3000, 16000, 400)
     ]
-    planets[2].addShip(new Ship("Hood"))
-    planets[2].addShip(new Ship("Reliant"))
+    planets[1].addShip(new Ship("Hood"))
+    planets[1].addShip(new Ship("Reliant"))
 
     for p in planets
       @addPlanet(p)

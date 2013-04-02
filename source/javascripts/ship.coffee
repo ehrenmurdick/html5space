@@ -3,7 +3,7 @@ class window.Ship
     @id = window.game.guid()
     @name = name
 
-  traverse: (finish) ->
+  patrol: (finish) ->
     finish = window.game.planets[finish]
     start = @planet
     dx = finish.x - start.x
@@ -25,19 +25,35 @@ class window.Ship
       width: 32
       height: 48
       zIndex: 999
-      WebkitTransform: "rotate(#{angle}rad)"
+      rotate: angle
 
     $('#space').append(@el)
 
-    @el.animate
-      left: finish.x
-      top: finish.y
-    ,
-      duration: dist
-      easing: "easeInOutQuad"
-      complete: =>
-        finish.addShip(this)
-        @el.remove()
+    patrol = (start, finish) =>
+      fx = finish.x + (Math.random()*500-250)
+      fy = finish.y + (Math.random()*500-250)
+
+      dx = fx - parseInt(@el.css("left"))
+      dy = fy - parseInt(@el.css("top"))
+
+      angle = Math.atan(dy/dx)
+      angle += Math.PI/2
+      angle += Math.PI if dx < 0
+      
+      @el.animate
+        rotate: angle
+      ,
+        complete: =>
+          @el.animate
+            left: fx
+            top: fy
+          ,
+            duration: dist
+            easing: "easeInOutQuad"
+            complete: =>
+              patrol(finish, start)
+              # @el.remove()
+    patrol(start, finish)
 
   destinations: ->
     v for k,v of window.game.planets
